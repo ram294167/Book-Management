@@ -93,7 +93,6 @@ export default function App() {
       <header className="site-header">
         <div className="brand">
           <h1>Book Management</h1>
-          <p>Manage books — view, add, edit, delete</p>
         </div>
         <div className="header-actions">
           <button className="btn btn-primary add-book-btn" type="button" onClick={openAdd}>Add Book</button>

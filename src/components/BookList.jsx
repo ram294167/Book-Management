@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function BookCard({b, onEdit, onDelete}){
+function BookCard({b, onEdit, onDelete, onImageClick}){
   return (
     <article className="card" aria-label={`Book card for ${b.title}`}>
       {b.image ? (
-        <img className="card-image" src={b.image} alt={`Cover for ${b.title}`} />
+        <button className="card-image-btn" type="button" onClick={() => onImageClick(b.image)} aria-label={`Open cover for ${b.title}`}>
+          <img className="card-image" src={b.image} alt={`Cover for ${b.title}`} />
+        </button>
       ) : (
         <div className="card-image card-image-placeholder" aria-hidden="true">
           <span>no image</span>
@@ -45,6 +47,8 @@ function SkeletonCard(){
 }
 
 export default function BookList({books, onEdit, onDelete, loading}){
+  const [activeImage, setActiveImage] = useState(null)
+
   if (loading) return (
     <div className="grid" aria-live="polite" aria-busy="true">
       {Array.from({length: 6}).map((_, index) => <SkeletonCard key={index} />)}
@@ -53,8 +57,26 @@ export default function BookList({books, onEdit, onDelete, loading}){
 
   if (!books.length) return <p>No books found.</p>
   return (
-    <div className="grid">
-      {books.map(b => <BookCard key={b.id} b={b} onEdit={onEdit} onDelete={onDelete} />)}
-    </div>
+    <>
+      <div className="grid">
+        {books.map(b => (
+          <BookCard
+            key={b.id}
+            b={b}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onImageClick={setActiveImage}
+          />
+        ))}
+      </div>
+      {activeImage && (
+        <div className="image-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setActiveImage(null)}>
+          <div className="image-modal-panel" onClick={e => e.stopPropagation()}>
+            <button className="image-modal-close" type="button" onClick={() => setActiveImage(null)} aria-label="Close image">×</button>
+            <img src={activeImage} alt="Book cover" className="image-modal-img" />
+          </div>
+        </div>
+      )}
+    </>
   )
 }

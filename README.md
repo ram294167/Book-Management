@@ -8,6 +8,7 @@ A simple book management web app built with React and Vite. It includes book lis
 - JSON Server mock backend using `db.json`
 - Add and edit books in a modal form
 - Local cover image selection with live preview
+- Click a book cover to view it in a fullscreen modal with an X-close button
 - Search by title/author and filter by genre
 - Responsive 3-column card grid on desktop
 - Delete book support with confirmation
@@ -30,7 +31,7 @@ A simple book management web app built with React and Vite. It includes book lis
 Open a terminal in the project folder:
 
 ```powershell
-cd C:\Users\DELL\OneDrive\Desktop\book-management
+cd C:\Users\DELL\github-repos\Book-Management
 ```
 
 Install dependencies:
@@ -61,6 +62,7 @@ This will run:
 ## Notes
 
 - The app stores book images as browser data URLs when selected locally.
+- Clicking a book cover opens it in a fullscreen image preview modal with an X button to close.
 - The modal form is used for both create and update flows.
 - The grid displays three book cards per row on large screens and adapts responsively.
 
