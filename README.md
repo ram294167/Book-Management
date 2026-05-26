@@ -1,77 +1,100 @@
-# Book Management - React Assignment
+# Book Management - React & JSON Server
 
-This project is a simple Book Management System built with React and Vite. It demonstrates viewing, adding, editing, deleting, searching and filtering books. A JSON Server is used as a mock API.
+A simple book management web app built with React and Vite. It includes book listing, searching, filtering, local cover image upload, modal add/edit forms, and a JSON Server mock API.
 
+## Features
 
-Getting started
+- React + Vite frontend
+- JSON Server mock backend using `db.json`
+- Add and edit books in a modal form
+- Local cover image selection with live preview
+- Search by title/author and filter by genre
+- Responsive 3-column card grid on desktop
+- Delete book support with confirmation
+- Theme toggle (light/dark)
+- Loading skeletons while data loads
+- Test coverage with Vitest + Testing Library
 
-1. Install dependencies:
+## Project structure
 
-```bash
-npm install
+- `src/` - React application source
+- `src/components/` - reusable UI components
+- `src/api.js` - API helper functions for CRUD operations
+- `db.json` - mock book data for JSON Server
+- `package.json` - scripts and dependencies
+- `vite.config.js` - Vite configuration
+- `src/__tests__/` - unit tests
+
+## Getting started
+
+Open a terminal in the project folder:
+
+```powershell
+cd C:\Users\DELL\OneDrive\Desktop\book-management
 ```
 
-2. Start the app and mock API (runs both in parallel):
+Install dependencies:
 
-```bash
-npm run start
+```powershell
+npm.cmd install
 ```
 
-This starts the JSON Server at `http://localhost:4000` and the React dev server (Vite).
+Start both the React app and JSON Server:
 
-Environment
-
-Create a `.env` file at project root or set `VITE_API_URL` in your environment to point to the API. Use the included `.env.example` as a reference.
-
-API options for deployment
-
-- Host `db.json` using a simple JSON Server host or use a hosted mock API (MockAPI, Beeceptor, etc.) and set `VITE_API_URL` to the hosted URL.
-
-Build & preview
-
-```bash
-npm run build
-npm run preview
+```powershell
+npm.cmd run start
 ```
 
-Run tests
+This will run:
+- React dev server on `http://localhost:5173`
+- JSON Server API on `http://localhost:4000`
 
-```bash
-npm run test
+## Available scripts
+
+- `npm.cmd run dev` - run the Vite development server
+- `npm.cmd run start` - run both the app and JSON Server in parallel
+- `npm.cmd run build` - build the production app
+- `npm.cmd run preview` - preview the production build locally
+- `npm.cmd run test` - run tests once with Vitest
+- `npm.cmd run test:watch` - run tests in watch mode
+
+## Notes
+
+- The app stores book images as browser data URLs when selected locally.
+- The modal form is used for both create and update flows.
+- The grid displays three book cards per row on large screens and adapts responsively.
+
+## Deploying
+
+To deploy the frontend:
+
+1. Build the app:
+
+```powershell
+npm.cmd run build
 ```
 
-> On Windows, use `npm.cmd run test` if your shell does not recognize `npm run`.
-> The project has been validated to build successfully with `npm.cmd run build`.
+2. Deploy the `dist/` folder on Vercel, Netlify, or any static host.
 
-Deploying the frontend
+3. If using a hosted API, update `VITE_API_URL` accordingly.
 
-- Vercel / Netlify: Connect the repository, build command `npm run build`, and publish directory `dist`.
-- In Vercel/Netlify set the `VITE_API_URL` env var to your hosted API URL.
+## GitHub
 
-Publishing to GitHub
+The repository is already connected to `https://github.com/ram294167/Book-Management.git`.
 
-```bash
-git init
-git add .
-git commit -m "Initial commit - book management"
-gh repo create your-username/book-management --public --source=. --remote=origin
-git push -u origin main
+## Testing
+
+Run the test suite with:
+
+```powershell
+npm.cmd run test
 ```
 
-Replace `your-username` with your GitHub username. After pushing, connect the repo to Vercel/Netlify for automatic deploys.
+## Improvements
 
-What I included
+Potential future enhancements:
 
-- Simple React app using Vite
-- JSON Server `db.json` with mock books
-- Components: `BookList`, `BookForm`, `SearchBar`, `Filter`
-- Local cover image upload and preview support from browser file selection
-- Basic loading/error handling and confirm for deletes
-- `README.md` with instructions and `.env.example`
-
-Next steps (suggested)
-
-- Improve accessibility and add tests
+- Host a real backend API instead of JSON Server
 - Add pagination and sorting
-- Replace JSON Server with a simple hosted API for live deployment
-
+- Improve accessibility further
+- Add deployment documentation and live demo link
