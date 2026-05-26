@@ -51,6 +51,12 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
     reader.readAsDataURL(file)
   }
 
+  const clearImage = () => {
+    setForm(prev => ({ ...prev, image: '' }))
+    setPreview('')
+    setFileName('')
+  }
+
   return (
     <form className="book-form" onSubmit={submit} aria-live="polite">
       <h3 id="book-form-title">{editing ? 'Edit Book' : 'Add Book'}</h3>
@@ -86,6 +92,7 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
         <div className="image-preview">
           <div className="preview-label">Preview</div>
           <div className="preview-box">
+            <button type="button" className="clear-image" onClick={clearImage} aria-label="Remove selected image">✕</button>
             <img src={preview} alt="Selected cover preview" />
           </div>
         </div>

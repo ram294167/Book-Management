@@ -98,6 +98,9 @@ select{padding:10px;border-radius:14px;border:1px solid #e6edf3;background:#fff;
 .app.dark .preview-box{background:rgba(255,255,255,0.04);box-shadow:none}
 .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
 
+.clear-image{position:absolute;top:8px;right:8px;z-index:5;background:rgba(0,0,0,0.6);color:#fff;border:0;width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.clear-image:hover{background:rgba(0,0,0,0.75)}
+
 .status-message{padding:14px 16px;background:#fee2e2;color:#991b1b;border-radius:12px;border:1px solid #fecaca}
 
 /* small screens */

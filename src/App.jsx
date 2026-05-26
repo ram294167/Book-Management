@@ -29,6 +29,18 @@ export default function App() {
 
   useEffect(() => { load() }, [])
 
+  useEffect(() => {
+    if (!showModal) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setShowModal(false)
+        setEditing(null)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [showModal])
+
   const openAdd = () => {
     setEditing(null)
     setShowModal(true)
@@ -106,8 +118,14 @@ export default function App() {
       </main>
 
       {showModal && (
-        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="book-form-title">
-          <div className="modal-panel">
+        <div
+          className="modal-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="book-form-title"
+          onClick={() => { setShowModal(false); setEditing(null) }}
+        >
+          <div className="modal-panel" onClick={e => e.stopPropagation()}>
             <button className="modal-close" type="button" onClick={() => { setShowModal(false); setEditing(null) }} aria-label="Close form">×</button>
             <BookForm onCreate={handleCreate} onUpdate={handleUpdate} editing={editing} onCancel={() => { setShowModal(false); setEditing(null) }} />
           </div>
