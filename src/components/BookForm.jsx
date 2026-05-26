@@ -20,6 +20,21 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
     }
   }, [editing])
 
+  const slugify = (value) => value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+
+  const updateTitle = (value) => {
+    setForm(prev => {
+      const updated = { ...prev, title: value }
+      if (prev.image) {
+        const ext = prev.imageName?.split('.').pop() || 'png'
+        const imageNameValue = `${slugify(value) || 'image'}.${ext}`
+        setFileName(imageNameValue)
+        return { ...updated, imageName: imageNameValue }
+      }
+      return updated
+    })
+  }
+
   const submit = async (e) => {
     e.preventDefault()
     setSubmitting(true)
@@ -36,8 +51,6 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
       setSubmitting(false)
     }
   }
-
-  const slugify = (value) => value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0]
@@ -69,7 +82,7 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
       <div className="form-row">
         <label>
           Title
-          <input required aria-required="true" name="title" placeholder="Enter title" value={form.title} onChange={e=>setForm({...form, title:e.target.value})} />
+          <input required aria-required="true" name="title" placeholder="Enter title" value={form.title} onChange={e=>updateTitle(e.target.value)} />
         </label>
         <label>
           Author
