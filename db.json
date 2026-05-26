@@ -1,7 +1,43 @@
 {
   "books": [
-    { "id": 1, "title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "genre": "Classic", "year": 1925 },
-    { "id": 2, "title": "1984", "author": "George Orwell", "genre": "Dystopian", "year": 1949 },
-    { "id": 3, "title": "To Kill a Mockingbird", "author": "Harper Lee", "genre": "Classic", "year": 1960 }
+    {
+      "id": 1,
+      "title": "The Great Gatsby",
+      "author": "megu",
+      "genre": "Classic",
+      "year": 1925,
+      "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "id": 2,
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Dystopian",
+      "year": 1949
+    },
+    {
+      "title": "Pride and Prejudice ",
+      "author": "– Janne Auste",
+      "genre": "fantasy",
+      "year": 2021,
+      "image": "",
+      "id": 3
+    },
+    {
+      "title": "David Copperfield ",
+      "author": "Charles Dickens",
+      "genre": "World classics",
+      "year": 2023,
+      "image": "",
+      "id": 4
+    },
+    {
+      "title": "The Guide ",
+      "author": "R.K. Narayan",
+      "genre": "Biographical",
+      "year": 2000,
+      "image": "",
+      "id": 5
+    }
   ]
 }

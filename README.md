@@ -34,6 +34,15 @@ npm run build
 npm run preview
 ```
 
+Run tests
+
+```bash
+npm run test
+```
+
+> On Windows, use `npm.cmd run test` if your shell does not recognize `npm run`.
+> The project has been validated to build successfully with `npm.cmd run build`.
+
 Deploying the frontend
 
 - Vercel / Netlify: Connect the repository, build command `npm run build`, and publish directory `dist`.
@@ -56,6 +65,7 @@ What I included
 - Simple React app using Vite
 - JSON Server `db.json` with mock books
 - Components: `BookList`, `BookForm`, `SearchBar`, `Filter`
+- Local cover image upload and preview support from browser file selection
 - Basic loading/error handling and confirm for deletes
 - `README.md` with instructions and `.env.example`
 
