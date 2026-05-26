@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const empty = { title: '', author: '', genre: '', year: '', image: '' }
+const empty = { title: '', author: '', genre: '', year: '', image: '', imageName: '' }
 
 export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
   const [form, setForm] = useState(empty)
@@ -12,7 +12,7 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
     if (editing) {
       setForm({...empty, ...editing})
       setPreview(editing.image || '')
-      setFileName('')
+      setFileName(editing.imageName || '')
     } else {
       setForm(empty)
       setPreview('')
@@ -37,6 +37,8 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
     }
   }
 
+  const slugify = (value) => value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+
   const handleFileChange = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -44,15 +46,19 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
     const reader = new FileReader()
     reader.onload = () => {
       const result = reader.result?.toString() || ''
-      setForm(prev => ({ ...prev, image: result }))
+      const ext = file.name.split('.').pop() || 'png'
+      const titleSlug = form.title ? slugify(form.title) : slugify(file.name.replace(/\.[^/.]+$/, ''))
+      const imageNameValue = `${titleSlug || 'image'}.${ext}`
+
+      setForm(prev => ({ ...prev, image: result, imageName: imageNameValue }))
       setPreview(result)
-      setFileName(file.name)
+      setFileName(imageNameValue)
     }
     reader.readAsDataURL(file)
   }
 
   const clearImage = () => {
-    setForm(prev => ({ ...prev, image: '' }))
+    setForm(prev => ({ ...prev, image: '', imageName: '' }))
     setPreview('')
     setFileName('')
   }
@@ -95,6 +101,7 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
             <button type="button" className="clear-image" onClick={clearImage} aria-label="Remove selected image">✕</button>
             <img src={preview} alt="Selected cover preview" />
           </div>
+          {form.imageName && <div className="file-meta">Image record name: {form.imageName}</div>}
         </div>
       )}
       <div className="form-actions">

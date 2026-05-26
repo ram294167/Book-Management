@@ -16,28 +16,27 @@ describe('BookForm', () => {
       fireEvent.click(screen.getByRole('button', { name: /create/i }))
     })
 
-    expect(onCreate).toHaveBeenCalledWith({
+    expect(onCreate).toHaveBeenCalledWith(expect.objectContaining({
       title: 'New Book',
       author: 'Jane Doe',
       genre: 'Fantasy',
       year: 2024,
       image: ''
-    })
+    }))
   })
 
   it('accepts a local image file and submits a data URL', async () => {
     const onCreate = vi.fn()
     render(<BookForm onCreate={onCreate} onUpdate={vi.fn()} editing={null} onCancel={vi.fn()} />)
 
+    fireEvent.change(screen.getByPlaceholderText(/Enter title/i), { target: { value: 'New Book' } })
+    fireEvent.change(screen.getByPlaceholderText(/Enter author/i), { target: { value: 'Jane Doe' } })
     const file = new File(['dummy content'], 'cover.png', { type: 'image/png' })
     await act(async () => {
       fireEvent.change(screen.getByLabelText(/Cover image/i), { target: { files: [file] } })
     })
 
     await waitFor(() => expect(screen.getByAltText(/Selected cover preview/i)).toBeInTheDocument())
-
-    fireEvent.change(screen.getByPlaceholderText(/Enter title/i), { target: { value: 'New Book' } })
-    fireEvent.change(screen.getByPlaceholderText(/Enter author/i), { target: { value: 'Jane Doe' } })
 
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /create/i }))
@@ -46,7 +45,8 @@ describe('BookForm', () => {
     expect(onCreate).toHaveBeenCalledWith(expect.objectContaining({
       title: 'New Book',
       author: 'Jane Doe',
-      image: expect.stringMatching(/^data:image\/png;base64,/)
+      image: expect.stringMatching(/^data:image\/png;base64,/),
+      imageName: 'new-book.png'
     }))
   })
 })
