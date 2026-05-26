@@ -90,11 +90,12 @@ Run the test suite with:
 npm.cmd run test
 ```
 
-## Improvements
+## Demo
 
-Potential future enhancements:
+Live demo: https://book-management-ddwxrnnxh-ram294167s-projects.vercel.app/
 
-- Host a real backend API instead of JSON Server
-- Add pagination and sorting
-- Improve accessibility further
-- Add deployment documentation and live demo link
+## API usage
+
+- Does the app use API calls?: **Yes.** The frontend performs CRUD requests using the helper functions in `src/api.js`.
+- Which API does it call?: By default the app uses the environment variable `VITE_API_URL` (when set) and falls back to `http://localhost:4000`.
+- For the demo to work properly: the deployed site must have `VITE_API_URL` pointed to a reachable API (a hosted JSON Server or real backend). If `VITE_API_URL` is not set, the production site will attempt to call `http://localhost:4000`, which only works if the API is also hosted and accessible from the deployed site.
