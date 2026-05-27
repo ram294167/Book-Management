@@ -3,30 +3,57 @@ const API = apiUrl.replace(/\/$/, '').endsWith('/books')
   ? apiUrl.replace(/\/$/, '')
   : `${apiUrl.replace(/\/$/, '')}/books`
 
+async function handleResponse(res, fallbackMessage) {
+  let body = ''
+  try {
+    body = await res.text()
+    // try to keep JSON if present
+    try { body = JSON.parse(body) } catch (_) { /* leave as text */ }
+  } catch (_) {}
+
+  if (!res.ok) {
+    const msg = typeof body === 'string' && body ? body : (body && body.message) || fallbackMessage
+    throw new Error(`${res.status} ${res.statusText}: ${msg}`)
+  }
+  return typeof body === 'string' ? (body ? JSON.parse(body) : null) : body
+}
+
 export async function getBooks() {
   const res = await fetch(API)
-  if (!res.ok) throw new Error('Network error')
-  return res.json()
+  return handleResponse(res, 'Network error')
 }
 
 export async function createBook(payload) {
-  const res = await fetch(API, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-  })
-  if (!res.ok) throw new Error('Create failed')
-  return res.json()
+  let res
+  try {
+    res = await fetch(API, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    })
+  } catch (err) {
+    throw new Error(`Network request failed: ${err.message}`)
+  }
+  return handleResponse(res, 'Create failed')
 }
 
 export async function updateBook(id, payload) {
-  const res = await fetch(`${API}/${id}`, {
-    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-  })
-  if (!res.ok) throw new Error('Update failed')
-  return res.json()
+  let res
+  try {
+    res = await fetch(`${API}/${id}`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    })
+  } catch (err) {
+    throw new Error(`Network request failed: ${err.message}`)
+  }
+  return handleResponse(res, 'Update failed')
 }
 
 export async function deleteBook(id) {
-  const res = await fetch(`${API}/${id}`, { method: 'DELETE' })
-  if (!res.ok) throw new Error('Delete failed')
+  let res
+  try {
+    res = await fetch(`${API}/${id}`, { method: 'DELETE' })
+  } catch (err) {
+    throw new Error(`Network request failed: ${err.message}`)
+  }
+  await handleResponse(res, 'Delete failed')
   return true
 }

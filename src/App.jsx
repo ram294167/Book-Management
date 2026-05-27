@@ -57,7 +57,7 @@ export default function App() {
       setBooks(prev => [...prev, item])
       setShowModal(false)
     } catch (err) {
-      setError('Create failed')
+      setError(err?.message || 'Create failed')
     }
   }
 
@@ -68,7 +68,7 @@ export default function App() {
       setEditing(null)
       setShowModal(false)
     } catch (err) {
-      setError('Update failed')
+      setError(err?.message || 'Update failed')
     }
   }
 
@@ -78,7 +78,7 @@ export default function App() {
       await deleteBook(id)
       setBooks(prev => prev.filter(b => b.id !== id))
     } catch (err) {
-      setError('Delete failed')
+      setError(err?.message || 'Delete failed')
     }
   }
 

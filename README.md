@@ -80,6 +80,56 @@ npm.cmd run build
 
 3. If using a hosted API, update `VITE_API_URL` accordingly.
 
+### Vercel environment variable
+
+For your current MockAPI project, set the environment variable name to:
+
+```text
+VITE_API_URL
+```
+
+Set the value to the full books endpoint:
+
+```text
+https://6a1682401b90031f81b118b5.mockapi.io/books/books
+```
+
+Then redeploy the project.
+
+### MockAPI data setup
+
+The local `db.json` contains these four books:
+
+- The Great Gatsby
+- 1984
+- To Kill a Mockingbird
+- The Hobbit
+
+To mirror this data in MockAPI:
+
+1. Open your MockAPI project.
+2. Create a `books` resource if it does not already exist.
+3. Add the same four items manually or import the JSON from `db.json`.
+4. Confirm the endpoint returns data at:
+
+```text
+https://6a1682401b90031f81b118b5.mockapi.io/books/books
+```
+
+### Local development
+
+For local development with `json-server`, the app uses the default local endpoint:
+
+```text
+http://localhost:4000/books
+```
+
+## Mobile and incognito support
+
+- The deployed app is a static site, so it can be opened in incognito mode.
+- It also works on mobile phones as long as the Vercel site and API are accessible.
+- The UI is responsive and should adapt to phone screens, but test on a real device to confirm spacing and layout.
+
 ## GitHub
 
 The repository is already connected to `https://github.com/ram294167/Book-Management.git`.
