@@ -1,10 +1,7 @@
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000'
-// normalize: ensure we have a base origin (without a trailing /books) then append /books once
-const apiBase = apiUrl.replace(/\/books\/?$/, '').replace(/\/$/, '')
-const API = `${apiBase}/books`
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4000/books'
 
 // helpful for debugging in the browser console when deployed
-try { console.debug('API config', { VITE_API_URL: apiUrl, apiBase, API }) } catch (_) {}
+try { console.debug('API config', { VITE_API_URL: API }) } catch (_) {}
 
 async function handleResponse(res, fallbackMessage) {
   let body = ''
