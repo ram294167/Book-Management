@@ -38,7 +38,14 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
   const submit = async (e) => {
     e.preventDefault()
     setSubmitting(true)
-    const payload = { ...form, year: form.year ? Number(form.year) : '' }
+    let payload = { ...form, year: form.year ? Number(form.year) : '' }
+    
+    // exclude image and imageName from update (only allow on create)
+    if (editing) {
+      const { image, imageName, ...updatePayload } = payload
+      payload = updatePayload
+    }
+    
     try {
       if (editing) await onUpdate(editing.id, payload)
       else await onCreate(payload)
