@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { uploadImage } from '../uploadService'
 
 const empty = { title: '', author: '', genre: '', year: '', image: '', imageName: '' }
 
@@ -38,22 +39,35 @@ export default function BookForm({ onCreate, onUpdate, editing, onCancel }){
   const submit = async (e) => {
     e.preventDefault()
     setSubmitting(true)
-    let payload = { ...form, year: form.year ? Number(form.year) : '' }
-    
-    // exclude image and imageName from update (only allow on create)
-    if (editing) {
-      const { image, imageName, ...updatePayload } = payload
-      payload = updatePayload
-    }
     
     try {
+      let imageUrl = form.image || ''
+      
+      // if there's a base64 image (new file selected), upload it first
+      if (form.image && form.image.startsWith('data:')) {
+        const blob = await fetch(form.image).then(res => res.blob())
+        const file = new File([blob], form.imageName || 'image.png', { type: blob.type })
+        imageUrl = await uploadImage(file)
+      }
+      
+      // build payload with title, author, genre, year, and image URL
+      const payload = {
+        title: form.title,
+        author: form.author,
+        genre: form.genre,
+        year: form.year ? Number(form.year) : '',
+        image: imageUrl
+      }
+      
       if (editing) await onUpdate(editing.id, payload)
       else await onCreate(payload)
+      
       setForm(empty)
       setPreview('')
       setFileName('')
     } catch (err) {
       // let parent handle errors
+      console.error('Submit error:', err)
     } finally {
       setSubmitting(false)
     }
