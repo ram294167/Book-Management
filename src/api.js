@@ -1,5 +1,7 @@
-const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000'
-const API = `${baseUrl.replace(/\/$/, '')}/books`
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+const API = apiUrl.replace(/\/$/, '').endsWith('/books')
+  ? apiUrl.replace(/\/$/, '')
+  : `${apiUrl.replace(/\/$/, '')}/books`
 
 export async function getBooks() {
   const res = await fetch(API)
